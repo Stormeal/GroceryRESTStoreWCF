@@ -17,7 +17,7 @@ namespace GroceryRESTStoreWCF
         [OperationContract]
         [WebInvoke(Method = "GET",
              ResponseFormat = WebMessageFormat.Json,
-             UriTemplate = "vegetables/")]
+             UriTemplate = "vegetables")]
         IList<Vegetable> GetVegetables();
 
         [OperationContract]
@@ -38,7 +38,7 @@ namespace GroceryRESTStoreWCF
         [WebInvoke(Method = "GET",
             ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.Bare,
-            UriTemplate = "vegetables/name/{typeFragment}")]
+            UriTemplate = "vegetables/type/{typeFragment}")]
         IEnumerable<Vegetable> GetVegetablesByType(string typeFragment);
 
         [OperationContract]
@@ -50,16 +50,30 @@ namespace GroceryRESTStoreWCF
 
         #endregion
 
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+             RequestFormat = WebMessageFormat.Json,
+             ResponseFormat = WebMessageFormat.Json,
+             BodyStyle = WebMessageBodyStyle.Bare,
+             UriTemplate = "vegetables")]
+        Vegetable AddVegetable(Vegetable vegetable);
 
-    }
+        [OperationContract]
+        [WebInvoke(Method = "PUT",
+             RequestFormat = WebMessageFormat.Json,
+             ResponseFormat = WebMessageFormat.Json,
+             BodyStyle = WebMessageBodyStyle.Bare,
+             UriTemplate = "vegetables/{id}")]
+        Vegetable UpdateVegetable(string id, Vegetable vegetable);
 
+        [OperationContract]
+        [WebInvoke(Method = "DELETE",
+             RequestFormat = WebMessageFormat.Json,
+             ResponseFormat = WebMessageFormat.Json,
+             BodyStyle = WebMessageBodyStyle.Bare,
+             UriTemplate = "vegetables/{id}")]
+        Vegetable DeleteVegetable(string id);
 
-
-
-    // Use a data contract as illustrated in the sample below to add composite types to service operations.
-    [DataContract]
-    public class CompositeType
-    {
 
     }
 }

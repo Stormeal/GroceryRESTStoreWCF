@@ -15,6 +15,8 @@ namespace GroceryRESTStoreWCF
         private static readonly IList<Vegetable> Vegetables = new List<Vegetable>();
         private static int nextId = 10;
 
+        WebOperationContext webContext = WebOperationContext.Current;
+
         static GroceryService()
         {
             //NOTE: A simple collection with some basic VEGETABLES that can be called and modified in the RESTful API. 
