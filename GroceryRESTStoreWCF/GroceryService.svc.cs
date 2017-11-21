@@ -17,6 +17,7 @@ namespace GroceryRESTStoreWCF
 
         static GroceryService()
         {
+            //NOTE: A simple collection with some basic VEGETABLES that can be called and modified in the RESTful API. 
             #region List of Vegetables
 
             Vegetable firstVegetable = new Vegetable
