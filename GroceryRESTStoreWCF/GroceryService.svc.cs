@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
@@ -140,6 +141,35 @@ namespace GroceryRESTStoreWCF
         public IEnumerable<Vegetable> GetVegetablesByName(string nameFragment)
         {
             return Vegetables.Where(vegetable => vegetable.Name.ToLower().Contains(nameFragment.ToLower()));
+        }
+
+        public Vegetable AddVegetable(Vegetable vegetable)
+        {
+            vegetable.Id = nextId++;
+            Vegetables.Add(vegetable);
+            return vegetable;
+        }
+
+        public Vegetable UpdateVegetable(string id, Vegetable vegetable)
+        {
+            int idNumber = int.Parse(id);
+            Vegetable existingVegetable = Vegetables.FirstOrDefault(b => b.Id == idNumber);
+            if (existingVegetable == null) webContext.OutgoingResponse.StatusCode = HttpStatusCode.NotFound;
+            existingVegetable.Name = vegetable.Name;
+            existingVegetable.Type = vegetable.Type;
+            existingVegetable.Available = vegetable.Available;
+            existingVegetable.Price = vegetable.Price;
+
+            return existingVegetable;
+        }
+
+        public Vegetable DeleteVegetable(string id)
+        {
+            Vegetable vegetable = GetVegetable(id);
+            if(vegetable == null) webContext.OutgoingResponse.StatusCode = HttpStatusCode.NotFound;
+            bool removed = Vegetables.Remove(vegetable);
+            if (removed) return vegetable;
+            return null;
         }
     }
 }
