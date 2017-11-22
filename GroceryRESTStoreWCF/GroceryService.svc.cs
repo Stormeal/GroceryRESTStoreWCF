@@ -13,10 +13,12 @@ namespace GroceryRESTStoreWCF
     // NOTE: In order to launch WCF Test Client for testing this service, please select GroceryService.svc or GroceryService.svc.cs at the Solution Explorer and start debugging.
     public class GroceryService : IGroceryService
     {
-        private static readonly IList<Vegetable> Vegetables = new List<Vegetable>();
+        private static IList<Vegetable> Vegetables = new List<Vegetable>();
         private static int _nextId = 20;
 
         WebOperationContext webContext = WebOperationContext.Current;
+
+
 
         static GroceryService()
         {
@@ -27,7 +29,6 @@ namespace GroceryRESTStoreWCF
 
             {
                 Id = 1,
-                Available = true,
                 Name = "Cauliflower",
                 Price = 17.95,
                 Type = "Flowers"
@@ -36,7 +37,6 @@ namespace GroceryRESTStoreWCF
             Vegetables.Add(new Vegetable
             {
                 Id = 2,
-                Available = true,
                 Name = "Carrot",
                 Price = 5.95,
                 Type = "Roots"
@@ -44,7 +44,6 @@ namespace GroceryRESTStoreWCF
             Vegetables.Add(new Vegetable
             {
                 Id = 3,
-                Available = true,
                 Name = "Cabbages",
                 Price = 16.95,
                 Type = "Leaves"
@@ -52,7 +51,6 @@ namespace GroceryRESTStoreWCF
             Vegetables.Add(new Vegetable
             {
                 Id = 4,
-                Available = true,
                 Name = "Broccoli",
                 Price = 12.95,
                 Type = "Flowers"
@@ -60,7 +58,6 @@ namespace GroceryRESTStoreWCF
             Vegetables.Add(new Vegetable
             {
                 Id = 5,
-                Available = true,
                 Name = "Celery",
                 Price = 14.95,
                 Type = "Stems"
@@ -68,7 +65,6 @@ namespace GroceryRESTStoreWCF
             Vegetables.Add(new Vegetable
             {
                 Id = 6,
-                Available = true,
                 Name = "Artichokes",
                 Price = 34.95,
                 Type = "Flowers"
@@ -76,7 +72,6 @@ namespace GroceryRESTStoreWCF
             Vegetables.Add(new Vegetable
             {
                 Id = 7,
-                Available = true,
                 Name = "Onions",
                 Price = 7.95,
                 Type = "Bulbs"
@@ -84,7 +79,6 @@ namespace GroceryRESTStoreWCF
             Vegetables.Add(new Vegetable
             {
                 Id = 8,
-                Available = true,
                 Name = "Spring Onions",
                 Price = 12.95,
                 Type = "Bulbs"
@@ -92,7 +86,6 @@ namespace GroceryRESTStoreWCF
             Vegetables.Add(new Vegetable
             {
                 Id = 9,
-                Available = true,
                 Name = "Spinach",
                 Price = 14.95,
                 Type = "Leaves"
@@ -100,7 +93,6 @@ namespace GroceryRESTStoreWCF
             Vegetables.Add(new Vegetable
             {
                 Id = 10,
-                Available = true,
                 Name = "Brussel Sprouts",
                 Price = 23.95,
                 Type = "Leaves"
@@ -157,7 +149,6 @@ namespace GroceryRESTStoreWCF
             if (existingVegetable == null) webContext.OutgoingResponse.StatusCode = HttpStatusCode.NotFound;
             existingVegetable.Name = vegetable.Name;
             existingVegetable.Type = vegetable.Type;
-            existingVegetable.Available = vegetable.Available;
             existingVegetable.Price = vegetable.Price;
 
             return existingVegetable;

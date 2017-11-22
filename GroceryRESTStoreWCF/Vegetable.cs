@@ -16,8 +16,6 @@ namespace GroceryRESTStoreWCF
         [DataMember]
         public string Name { get; set; }
         [DataMember]
-        public bool Available { get; set; }
-        [DataMember]
         public double Price { get; set; }
       
 
