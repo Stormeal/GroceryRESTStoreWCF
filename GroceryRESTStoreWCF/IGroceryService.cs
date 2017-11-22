@@ -54,8 +54,7 @@ namespace GroceryRESTStoreWCF
         [WebInvoke(Method = "POST",
              RequestFormat = WebMessageFormat.Json,
              ResponseFormat = WebMessageFormat.Json,
-             BodyStyle = WebMessageBodyStyle.Bare,
-             UriTemplate = "vegetables")]
+             BodyStyle = WebMessageBodyStyle.Bare, UriTemplate = "vegetables")]
         Vegetable AddVegetable(Vegetable vegetable);
 
         [OperationContract]
@@ -73,7 +72,6 @@ namespace GroceryRESTStoreWCF
              BodyStyle = WebMessageBodyStyle.Bare,
              UriTemplate = "vegetables/{id}")]
         Vegetable DeleteVegetable(string id);
-
 
     }
 }

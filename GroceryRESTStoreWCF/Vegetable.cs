@@ -19,6 +19,7 @@ namespace GroceryRESTStoreWCF
         public bool Available { get; set; }
         [DataMember]
         public double Price { get; set; }
+      
 
     }
 }

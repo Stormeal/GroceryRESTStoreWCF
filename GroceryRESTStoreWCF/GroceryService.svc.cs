@@ -14,7 +14,7 @@ namespace GroceryRESTStoreWCF
     public class GroceryService : IGroceryService
     {
         private static readonly IList<Vegetable> Vegetables = new List<Vegetable>();
-        private static int nextId = 10;
+        private static int _nextId = 20;
 
         WebOperationContext webContext = WebOperationContext.Current;
 
@@ -145,7 +145,7 @@ namespace GroceryRESTStoreWCF
 
         public Vegetable AddVegetable(Vegetable vegetable)
         {
-            vegetable.Id = nextId++;
+            vegetable.Id = _nextId++;
             Vegetables.Add(vegetable);
             return vegetable;
         }
