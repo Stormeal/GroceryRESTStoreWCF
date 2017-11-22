@@ -28,7 +28,7 @@ namespace GroceryRESTStoreWCF
             Vegetable firstVegetable = new Vegetable
 
             {
-                Id = 1,
+                Id = 7,
                 Name = "Cauliflower",
                 Price = 17.95,
                 Type = "Flowers"
@@ -50,28 +50,28 @@ namespace GroceryRESTStoreWCF
             });
             Vegetables.Add(new Vegetable
             {
-                Id = 4,
+                Id = 5,
                 Name = "Broccoli",
                 Price = 12.95,
                 Type = "Flowers"
             });
             Vegetables.Add(new Vegetable
             {
-                Id = 5,
+                Id = 4,
                 Name = "Celery",
                 Price = 14.95,
                 Type = "Stems"
             });
             Vegetables.Add(new Vegetable
             {
-                Id = 6,
+                Id = 9,
                 Name = "Artichokes",
                 Price = 34.95,
                 Type = "Flowers"
             });
             Vegetables.Add(new Vegetable
             {
-                Id = 7,
+                Id = 1,
                 Name = "Onions",
                 Price = 7.95,
                 Type = "Bulbs"
@@ -85,7 +85,7 @@ namespace GroceryRESTStoreWCF
             });
             Vegetables.Add(new Vegetable
             {
-                Id = 9,
+                Id = 6,
                 Name = "Spinach",
                 Price = 14.95,
                 Type = "Leaves"
