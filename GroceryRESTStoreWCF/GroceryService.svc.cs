@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Runtime.Serialization;
@@ -157,10 +159,96 @@ namespace GroceryRESTStoreWCF
         public Vegetable DeleteVegetable(string id)
         {
             Vegetable vegetable = GetVegetable(id);
-            if(vegetable == null) webContext.OutgoingResponse.StatusCode = HttpStatusCode.NotFound;
+            if (vegetable == null) webContext.OutgoingResponse.StatusCode = HttpStatusCode.NotFound;
             bool removed = Vegetables.Remove(vegetable);
             if (removed) return vegetable;
             return null;
         }
+
+        //        ==================================================================
+        //        ====================== DATABASE METHODS ==========================
+        //        ==================================================================
+
+        private const string connectionString =
+            "Server=tcp:stormeal.database.windows.net,1433;Initial Catalog=stormeal.databaseserver;Persist Security Info=False;User ID=xzebze;Password=Aes09029418432;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+
+        private static Vegetable ReadVegetable(IDataRecord reader)
+        {
+            int id = reader.GetInt32(0);
+            string name = reader.GetString(1);
+            double price = double.Parse($"{reader.GetDecimal(3)}");
+            string type = reader.GetString(4);
+            Vegetable aVegetable = new Vegetable
+            {
+                Id = id,
+                Name = name,
+                Price = price,
+                Type = type
+            };
+            return aVegetable;
+        }
+
+        public IList<Vegetable> GetVegablesDB()
+        {
+            const string SelectAllVegetables = "select * from dbo.Vegetables";
+            using (SqlConnection databaseConnection = new SqlConnection(connectionString))
+            {
+                databaseConnection.Open();
+                using (SqlCommand selectCommand = new SqlCommand(SelectAllVegetables, databaseConnection))
+                {
+                    using (SqlDataReader reader = selectCommand.ExecuteReader())
+                    {
+                        List<Vegetable> vegetableList = new List<Vegetable>();
+                        while (reader.Read())
+                        {
+                            Vegetable aVegetable = ReadVegetable(reader);
+                            vegetableList.Add(aVegetable);
+                        }
+                        return vegetableList;
+                    }
+                }
+            }
+        }
+
+        public IList<Vegetable> GetNameOfVegetable(string nameFragment)
+        {
+            const string SelectAllVegetables = "select * from dbo.Vegetables where Name = @name";
+            using (SqlConnection databaseConnection = new SqlConnection(connectionString))
+            {
+                databaseConnection.Open();
+                using (SqlCommand selectCommand = new SqlCommand(SelectAllVegetables, databaseConnection))
+                {
+                    selectCommand.Parameters.AddWithValue("@name", nameFragment);
+                    using (SqlDataReader reader = selectCommand.ExecuteReader())
+                    {
+                        List<Vegetable> vegetableList = new List<Vegetable>();
+                        while (reader.Read())
+                        {
+                            Vegetable aVegetable = ReadVegetable(reader);
+                            vegetableList.Add(aVegetable);
+                        }
+                        return vegetableList;
+                    }
+                }
+            }
+        }
+
+        public void AddVegetableDB(Vegetable v)
+        {
+            const string insertVegetable = "insert into dbo.Vegetables (Id, Name, Type, Price) values (@id, @name, @type, @price";
+            using (SqlConnection databaseConnection = new SqlConnection(connectionString))
+            {
+                databaseConnection.Open();
+                using (SqlCommand insertCommand = new SqlCommand(insertVegetable, databaseConnection))
+                {
+                    insertCommand.Parameters.AddWithValue("@id", v.Id);
+                    insertCommand.Parameters.AddWithValue("@name", v.Name);
+                    insertCommand.Parameters.AddWithValue("@type", v.Type);
+                    insertCommand.Parameters.AddWithValue("@price", v.Price);
+                    insertCommand.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }
+

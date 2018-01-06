@@ -73,5 +73,33 @@ namespace GroceryRESTStoreWCF
              UriTemplate = "vegetables/{id}")]
         Vegetable DeleteVegetable(string id);
 
+//        ==================================================================
+//        ====================== DATABASE METHODS ==========================
+//        ==================================================================
+
+        [OperationContract]
+        [WebInvoke(Method = "GET",
+             BodyStyle = WebMessageBodyStyle.Bare,
+             ResponseFormat = WebMessageFormat.Json,
+             RequestFormat = WebMessageFormat.Json,
+             UriTemplate = "db/vegetables/")]
+        IList<Vegetable> GetVegablesDB();
+
+        [OperationContract]
+        [WebInvoke(Method = "GET",
+             BodyStyle = WebMessageBodyStyle.Bare,
+             ResponseFormat = WebMessageFormat.Json,
+             RequestFormat = WebMessageFormat.Json,
+             UriTemplate = "db/vegetables/name/{nameFragment}")]
+        IList<Vegetable> GetNameOfVegetable(string nameFragement);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+             BodyStyle = WebMessageBodyStyle.Bare,
+             ResponseFormat = WebMessageFormat.Json,
+             RequestFormat = WebMessageFormat.Json,
+             UriTemplate = "db/vegetables/")]
+        void AddVegetableDB(Vegetable v);
+
     }
 }
