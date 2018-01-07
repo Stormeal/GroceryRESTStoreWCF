@@ -81,17 +81,16 @@ namespace GroceryRESTStoreWCF
         [WebInvoke(Method = "GET",
              BodyStyle = WebMessageBodyStyle.Bare,
              ResponseFormat = WebMessageFormat.Json,
-             RequestFormat = WebMessageFormat.Json,
-             UriTemplate = "db/vegetables/")]
+             UriTemplate = "db/vegetables")]
         IList<Vegetable> GetVegablesDB();
 
-        [OperationContract]
-        [WebInvoke(Method = "GET",
-             BodyStyle = WebMessageBodyStyle.Bare,
-             ResponseFormat = WebMessageFormat.Json,
-             RequestFormat = WebMessageFormat.Json,
-             UriTemplate = "db/vegetables/name/{nameFragment}")]
-        IList<Vegetable> GetNameOfVegetable(string nameFragement);
+        //[OperationContract]
+        //[WebInvoke(Method = "GET",
+        //     BodyStyle = WebMessageBodyStyle.Bare,
+        //     ResponseFormat = WebMessageFormat.Json,
+        //     RequestFormat = WebMessageFormat.Json,
+        //     UriTemplate = "db/vegetables/name/{nameFragment}")]
+        //IList<Vegetable> GetNameOfVegetable(string nameFragement);
 
         [OperationContract]
         [WebInvoke(Method = "POST",

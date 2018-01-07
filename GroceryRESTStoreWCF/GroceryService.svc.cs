@@ -169,30 +169,32 @@ namespace GroceryRESTStoreWCF
         //        ====================== DATABASE METHODS ==========================
         //        ==================================================================
 
-        private const string connectionString =
-            "Server=tcp:stormeal.database.windows.net,1433;Initial Catalog=stormeal.databaseserver;Persist Security Info=False;User ID=xzebze;Password=Aes09029418432;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+        private const string connectionString ="Server=tcp:stormeal.database.windows.net,1433;Initial Catalog=stormeal.databaseserver;Persist Security Info=False;User ID=xzenze;Password=Aes09029418432;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
         private static Vegetable ReadVegetable(IDataRecord reader)
         {
             int id = reader.GetInt32(0);
             string name = reader.GetString(1);
+            string type = reader.GetString(2);
             double price = double.Parse($"{reader.GetDecimal(3)}");
-            string type = reader.GetString(4);
+
             Vegetable aVegetable = new Vegetable
             {
                 Id = id,
                 Name = name,
-                Price = price,
-                Type = type
+                Type = type,
+                Price = price
+
             };
             return aVegetable;
         }
 
         public IList<Vegetable> GetVegablesDB()
         {
-            const string SelectAllVegetables = "select * from dbo.Vegetables";
+
             using (SqlConnection databaseConnection = new SqlConnection(connectionString))
             {
+                const string SelectAllVegetables = "select * from dbo.Vegetables";
                 databaseConnection.Open();
                 using (SqlCommand selectCommand = new SqlCommand(SelectAllVegetables, databaseConnection))
                 {
@@ -235,7 +237,7 @@ namespace GroceryRESTStoreWCF
 
         public void AddVegetableDB(Vegetable v)
         {
-            const string insertVegetable = "insert into dbo.Vegetables (Id, Name, Type, Price) values (@id, @name, @type, @price";
+            const string insertVegetable = "insert into dbo.Vegetables (Id, Name, Type, Price) values (@id, @Name, @Type, @price)";
             using (SqlConnection databaseConnection = new SqlConnection(connectionString))
             {
                 databaseConnection.Open();
@@ -244,7 +246,7 @@ namespace GroceryRESTStoreWCF
                     insertCommand.Parameters.AddWithValue("@id", v.Id);
                     insertCommand.Parameters.AddWithValue("@name", v.Name);
                     insertCommand.Parameters.AddWithValue("@type", v.Type);
-                    insertCommand.Parameters.AddWithValue("@price", v.Price);
+                    insertCommand.Parameters.AddWithValue("@price", decimal.Parse($"{v.Price}"));
                     insertCommand.ExecuteNonQuery();
                 }
             }
